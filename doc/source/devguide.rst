@@ -79,7 +79,10 @@ with version 2.2.3, but not necessarily with 3.2.4.
 Package distribution
 --------------------
 
-xxx...
+We use `Conda <conda.pydata.org>`_ as a package and environment manager 
+to manage the project dependencies and to share environments. Conda 
+works with all platforms, and is language agnostic, which allows us
+to use it multi-language projects like this one.
 
 Commiting changes
 -----------------
