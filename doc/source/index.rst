@@ -3,9 +3,11 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-=======================================================
-XStream: Streaming data algorithms for x-ray tomography
-=======================================================
+=======
+XStream
+=======
+
+Streaming data algorithms for x-ray tomography. 
 
 .. toctree::
    :maxdepth: 1

@@ -7,6 +7,6 @@ Lead Developers
 
 Sponsors
 --------
-* Department of Energy
+* U.S. Department of Energy
 
 .. _`@dgursoy`: https://github.com/dgursoy

@@ -301,7 +301,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   (master_doc, project, project + u' Documentation',
-   author, project, 'Streaming data algorithms for x-ray tomography.',
+   argonne, project, 'Streaming data algorithms for x-ray tomography.',
    'Miscellaneous'),
 ]
 

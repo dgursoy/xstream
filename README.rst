@@ -1,6 +1,6 @@
-=======================================================
-XStream: Streaming data algorithms for x-ray tomography
-=======================================================
+=======
+XStream
+=======
 
 .. image:: https://readthedocs.org/projects/xstream/badge/?version=latest
     :target: http://xstream.readthedocs.org/en/latest/?badge=latest
@@ -9,6 +9,8 @@ XStream: Streaming data algorithms for x-ray tomography
 .. image:: https://badges.gitter.im/Join Chat.svg
     :target: https://gitter.im/dgursoy/xstream
     :alt: Gitter Chat
+
+Streaming data algorithms for x-ray tomography.
 
 Features
 --------
