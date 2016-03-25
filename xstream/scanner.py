@@ -46,5 +46,55 @@
 # POSSIBILITY OF SUCH DAMAGE.                                             #
 # #########################################################################
 
+
+__author__ = "Doga Gursoy"
+__contact__ = "dgursoy@aps.anl.gov"
+__copyright__ = "Copyright (c) 2016, UChicago Argonne, LLC."
+__license__ = "BSD-3"
+__version__ = "0.1.0"
+__status__ = "Development"
+__docformat__ = "restructuredtext en"
+__all__ = ["Rotator",
+           "Translator",
+           "Time"]
+
+
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
+
+import logging
+import numpy as np
+
+logger = logging.getLogger(__name__)
+
+
+class Rotator():
+    """ Class for describing rotations.
+    """
+
+    def __init__(self):
+        pass
+
+
+class Translator():
+    """ Class for describing translations.
+    """
+
+    def __init__(self):
+        pass
+
+
+class Time():
+    """ Class for describing time axis.
+    """
+
+    def __init__(self):
+        pass
+
+
+class Beam():
+    """ Class for describing x-ray beam.
+    """
+
+    def __init__(self):
+        pass

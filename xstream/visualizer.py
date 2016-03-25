@@ -46,5 +46,20 @@
 # POSSIBILITY OF SUCH DAMAGE.                                             #
 # #########################################################################
 
+
+__author__ = "Doga Gursoy"
+__contact__ = "dgursoy@aps.anl.gov"
+__copyright__ = "Copyright (c) 2016, UChicago Argonne, LLC."
+__license__ = "BSD-3"
+__version__ = "0.1.0"
+__status__ = "Development"
+__docformat__ = "restructuredtext en"
+__all__ = []
+
+
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
+
+import logging
+
+logger = logging.getLogger(__name__)

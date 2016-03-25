@@ -34,6 +34,9 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
+    'sphinx.ext.autosummary',
+    'sphinx.ext.napoleon',
+    'sphinxcontrib.bibtex',
     'sphinx.ext.coverage',
     'sphinx.ext.mathjax',
     'sphinx.ext.ifconfig',
@@ -231,7 +234,7 @@ html_static_path = ['.static']
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'xstreamdoc'
+htmlhelp_basename = project + 'doc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -253,9 +256,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  (master_doc,
-   project + '.tex',
-   project + u' Documentation',
+  (master_doc, project+'.tex', project+u' Documentation',
    argonne, 'manual'),
 ]
 
@@ -315,3 +316,28 @@ texinfo_documents = [
 
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
+
+# picked from http://read-the-docs.readthedocs.org/en/latest/faq.html
+class Mock(object):
+
+    __all__ = []
+
+    def __init__(self, *args, **kwargs):
+        pass
+
+    def __call__(self, *args, **kwargs):
+        return Mock()
+
+    @classmethod
+    def __getattr__(cls, name):
+        if name in ('__file__', '__path__'):
+            return '/dev/null'
+        elif name == 'c_byte':
+            return 0
+        else:
+            return Mock()
+
+MOCK_MODULES = ['numpy', 'matplotlib']
+
+for mod_name in MOCK_MODULES:
+    sys.modules[mod_name] = Mock()
