@@ -46,6 +46,9 @@
 # POSSIBILITY OF SUCH DAMAGE.                                             #
 # #########################################################################
 
+from __future__ import (absolute_import, division, print_function,
+                        unicode_literals)
+
 
 __author__ = "Doga Gursoy"
 __contact__ = "dgursoy@aps.anl.gov"
@@ -54,21 +57,26 @@ __license__ = "BSD-3"
 __version__ = "0.1.0"
 __status__ = "Development"
 __docformat__ = "restructuredtext en"
-__all__ = []
+__all__ = ['project',
+           'Point',
+           'Line',
+           'random_point',
+           'plot_points',
+           'show']
 
-
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
 
 import logging
 import numpy as np
+import math
+import random
+import matplotlib.pyplot as plt
 
 logger = logging.getLogger(__name__)
 
 
 def project(x0, y0, x1, y1, obj):
-	""" Project single x-ray beam.
-	"""
+    """Project single x-ray beam.
+    """
 
     x0, y0, x1, y1 = float(x0), float(y0), float(x1), float(y1)
     sx, sy = obj.shape
@@ -117,3 +125,153 @@ def project(x0, y0, x1, y1, obj):
 
     # projection
     return np.dot(dist[ind], obj[ix[ind], iy[ind]])
+
+
+class Point(object):
+    """Definition of a point in 2-D Cartesian space.
+    """
+
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __str__(self):
+        return "(" + str(self.x) + ", " + str(self.y) + ")"
+
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y
+
+    def __hash__(self):
+        return hash((self.x, self.y))
+
+    def __add__(self, other):
+        """Addition."""
+        return Point(self.x + other.x, self.y + other.y)
+
+    def __rmul__(self, c):
+        """Scalar multiplication."""
+        return Point(c * self.x, c * self.y)
+
+    def is_close(self, point, epsilon=1e-6):
+        """Checks if is close to a point."""
+        return self.dist(point) < epsilon
+
+    def dist(self, point):
+        """Returns the distance from a point."""
+        return math.sqrt(self.dist2(point))
+
+    def dist2(self, point):
+        """Returns the square of distance from a point."""
+        dx = self.x - point.x
+        dy = self.y - point.y
+        return dx * dx + dy * dy
+
+    def list(self):
+        """Returns the point's list representation."""
+        return [self.x, self.y]
+
+    def numpy(self):
+        """Returns the Numpy representation."""
+        return np.array([self.x, self.y])
+
+
+class Line(object):
+    """Definition of a line in 2-D Cartesian space.
+    """
+
+    def __init__(self, p1, p2):
+        self.p1 = p1
+        self.p2 = p2
+
+        if p1.x == p2.x:
+            self.slope = None
+            self.intercept = None
+            self.vertical = True
+        else:
+            self.slope = float(p2.y - p1.y) / (p2.x - p1.x)
+            self.intercept = p1.y - self.slope * p1.x
+            self.vertical = False
+
+    def __str__(self):
+        if self.vertical:
+            return "x = " + str(self.p1.x)
+        return "y = " + str(self.slope) + "x + " + str(self.intercept)
+
+    def __eq__(self, line):
+        if self.vertical != line.vertical:
+            return False
+
+        if self.vertical:
+            return self.p1.x == line.p1.x
+
+        return self.slope == line.slope and self.intercept == line.intercept
+
+    def at_x(self, x):
+        if self.vertical:
+            return None
+
+        return Point(x, self.slope * x + self.intercept)
+
+    def at_y(self, y):
+        return Point((y - self.intercept) / self.slope, y)
+
+    def dist(self, point):
+        """Returns the distance from a point."""
+        return sqrt(self.dist2(point))
+
+    def dist2(self, point):
+        """Returns the square of distance from a point."""
+        numerator = float(self.p2.x - self.p1.x) * (self.p1.y - point.y) - \
+            (self.p1.x - point.x) * (self.p2.y - self.p1.y)
+        numerator *= numerator
+        denominator = float(self.p2.x - self.p1.x) * (self.p2.x - self.p1.x) + \
+            (self.p2.y - self.p1.y) * (self.p2.y - self.p1.y)
+        return numerator / denominator
+
+    def intersection(self, line):
+        """Returns the intersection point with a line."""
+        if line.slope == self.slope:
+            return None
+
+        if self.vertical:
+            return line.at_x(self.p1.x)
+        elif line.vertical:
+            return self.at_x(line.p1.x)
+
+        x = float(self.intercept - line.intercept) / (line.slope - self.slope)
+        return self.at_x(x)
+
+    def midpoint(self):
+        """Returns the midpoint of two points describing a line."""
+        x = float(self.p1.x + self.p2.x) / 2
+        y = float(self.p1.y + self.p2.y) / 2
+        return Point(x, y)
+
+
+def random_point(k=1):
+    """ Generates a random point in 2-D Cartesian space. """
+    return Point(k * random.random(), k * random.random())
+
+
+def plot_points(points, style='bo'):
+    _plot_points(points, style=style)
+
+
+def _plot_points(points, style):
+    if not type(points) == list:
+        points = [points]
+
+    points = _points_to_numpy(points)
+    plt.plot(points[:, 0], points[:, 1], style)
+
+
+def plot_lines(lines, style='b-'):
+    _plot_lines(lines, style=style)
+
+
+def show():
+    plt.show()
+
+
+def _points_to_numpy(points):
+    return np.array(map(lambda p: p.numpy(), points), np.float32)

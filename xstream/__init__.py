@@ -57,3 +57,6 @@ try:
     __version__ = pkg_resources.working_set.require("xstream")[0].version
 except:
     pass
+
+from xstream.generator import *
+from xstream.reconstructor import *

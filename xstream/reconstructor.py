@@ -47,6 +47,10 @@
 # #########################################################################
 
 
+from __future__ import (absolute_import, division, print_function,
+                        unicode_literals)
+
+
 __author__ = "Doga Gursoy"
 __contact__ = "dgursoy@aps.anl.gov"
 __copyright__ = "Copyright (c) 2016, UChicago Argonne, LLC."
@@ -57,9 +61,6 @@ __docformat__ = "restructuredtext en"
 __all__ = []
 
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
-
 import logging
 import numpy as np
 
@@ -67,8 +68,8 @@ logger = logging.getLogger(__name__)
 
 
 def reconstruct(x0, y0, x1, y1, shape, data, rec):
-	""" Reconstruct single x-ray beam data.
-	"""
+    """ Reconstruct single x-ray beam data.
+    """
 
     x0, y0, x1, y1 = float(x0), float(y0), float(x1), float(y1)
     sx, sy = shape

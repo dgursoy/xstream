@@ -46,6 +46,9 @@
 # POSSIBILITY OF SUCH DAMAGE.                                             #
 # #########################################################################
 
+from __future__ import (absolute_import, division, print_function,
+                        unicode_literals)
+
 
 __author__ = "Doga Gursoy"
 __contact__ = "dgursoy@aps.anl.gov"
@@ -58,9 +61,6 @@ __all__ = ["Rotator",
            "Translator",
            "Time"]
 
-
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
 
 import logging
 import numpy as np
